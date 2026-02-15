@@ -12,7 +12,7 @@ N_SAMPLES = 500               # total rows
 LEAK_RATIO = 0.5              # 50/50 leak vs no leak
 OUT_PATH = Path("ml/fake_features.csv")
 
-# Feature columns (keep consistent with training script)
+# Feature columns 
 COLUMNS = [
     "thermal_mean", "thermal_max", "thermal_std", "thermal_range",
     "sound_rms", "sound_band_energy", "sound_peak_freq",
@@ -93,3 +93,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
