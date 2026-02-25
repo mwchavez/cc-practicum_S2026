@@ -13,7 +13,7 @@ This repo houses cloud infrastructure implementations for:
 **Focus:** IoT data pipeline for distributed water leak sensors and detection of said leaks.
 
 ### ☁️ CIS 4355 - Cloud Computing  
-**Project:** CloudHoney Monitoring Platform  
+**Project:** Cloud HoneyPot Monitoring Platform  
 **Faculty:** Dr. Parra  
 **Focus:** Create a cloud-native Honeypot and securiyt event monitoring platform deployed on GCP.
 
