@@ -10,12 +10,12 @@ This repo houses cloud infrastructure implementations for:
 ### 📊 CSEC 4390 - Practicum (Senior Design)
 **Project:** Cloud Backend for Hybrid Leak Detection System  
 **Faculty:** Dr. Okan Caglayan & Dr. Parra  
-**Focus:** IoT data pipeline for distributed water leak sensors
+**Focus:** IoT data pipeline for distributed water leak sensors and detection of said leaks.
 
 ### ☁️ CIS 4355 - Cloud Computing  
-**Project:** [Your final project topic - TBD]  
+**Project:** CloudHoney Monitoring Platform  
 **Faculty:** Dr. Parra  
-**Focus:** Applying the same AWS architecture to [different problem domain]
+**Focus:** Create a cloud-native Honeypot and securiyt event monitoring platform deployed on GCP.
 
 ## Why One Repository?
 
@@ -52,7 +52,7 @@ data-driven use cases.
 ## Learning Objectives
 
 This unified approach allows me to:
-1. Master AWS services deeply rather than superficially
+1. Master both AWS & GCP services deeply rather than just one
 2. Understand cloud architecture as reusable patterns
 3. Focus on problem-specific implementation details
 4. Demonstrate infrastructure-as-code best practices
