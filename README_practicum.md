@@ -25,11 +25,10 @@ ESP32 Sensors (Edge Devices)
   AWS IoT Core  ──────────────────────────────────────┐
   (MQTT Broker + Rules Engine)                        │
         │                                             │
-        │  IoT Rule → DynamoDB                        │  IoT Rule → Lambda
-        ▼                                             ▼
-   DynamoDB                                      Lambda Function
- (Raw sensor storage)                        (Real-time processing
-                                              & threshold detection)
+        │  IoT Rule → DynamoDB                        │ 
+        ▼                                             |
+   DynamoDB                                           |  
+ (Raw sensor storage)                                 |
                                                       │
                                           ┌───────────┴───────────┐
                                           ▼                       ▼
@@ -48,7 +47,6 @@ ESP32 Sensors (Edge Devices)
 |---|---|---|
 | **IoT Core** | MQTT broker & device gateway | Managed service; handles device auth with certificates so we don't have to build our own broker |
 | **DynamoDB** | Raw sensor data storage | NoSQL, scales automatically, fast writes for high-frequency sensor data |
-| **Lambda** | Serverless event processing | Runs code only when triggered (no server to manage); ideal for real-time alert logic |
 | **SNS** | Alert notifications | Delivers email/SMS alerts when thresholds are exceeded |
 | **CloudWatch** | Monitoring & logging | Tracks system health, Lambda errors, pipeline performance |
 
@@ -103,10 +101,6 @@ practicum-leak-detection/
 │   ├── thing-policy.json      # AWS IoT Core device policy definition
 │   └── iot-rules.json         # Rules Engine configuration (DynamoDB + Lambda routing)
 │
-├── lambda/
-│   ├── leak_processor.py      # Main Lambda function: threshold detection & alert logic
-│   └── requirements.txt       # Python dependencies
-│
 ├── dynamodb/
 │   └── table-schema.json      # DynamoDB table definition and key structure
 │
@@ -131,7 +125,6 @@ practicum-leak-detection/
 - [x] DynamoDB table configured with correct key schema
 - [x] IoT Rules Engine routing MQTT → DynamoDB
 - [x] End-to-end MQTT → IoT Core → DynamoDB pipeline tested
-- [ ] Lambda function for real-time threshold processing
 - [ ] SNS alert delivery integration
 - [ ] CloudWatch monitoring and dashboards
 - [ ] Web visualization dashboard
