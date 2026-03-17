@@ -129,6 +129,7 @@ practicum-leak-detection/
 - [ ] CloudWatch dashboards
 - [ ] Web visualization dashboard
 - [ ] Integration with Engineering team's physical sensor dataset
+- [ ] Make the Infrastructure into Code using AWS CDK.
 
 ---
 
