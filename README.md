@@ -1,6 +1,6 @@
 # Cloud Backend for Hybrid Leak Detection System
 **CSEC 4390 – Senior Design Practicum | Spring 2026**  
-**Faculty Advisor:** Dr. Okan Caglayan  
+**Faculty Advisor:** Dr. Okan Caglayan & Dr. Gonzalo Parra
 **Team:** Engineering & Cyber Security Systems
 
 ---
