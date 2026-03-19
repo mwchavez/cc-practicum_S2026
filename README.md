@@ -96,23 +96,22 @@ CloudWatch Metric Alarms evaluate sensor data against threshold rules and trigge
 ```
 practicum-leak-detection/
 ├── iot-core/
-│   ├── device-certs/          # Certificate files for ESP32 auth (not committed — see .gitignore)
-│   ├── thing-policy.json      # AWS IoT Core device policy definition
-│   └── iot-rules.json         # Rules Engine configuration (DynamoDB routing)
-│
+│   ├── device-certs/
+│   ├── thing-policy.json
+│   └── iot-rules.json
 ├── dynamodb/
-│   └── table-schema.json      # DynamoDB table definition and key structure
-│
+│   └── table-schema.json
 ├── esp32/
-│   ├── sensor_publisher.ino   # Arduino sketch for MQTT publishing from ESP32
-│   └── config.h               # WiFi/broker config (not committed — see .gitignore)
-│
+│   ├── sensor_publisher.ino
+│   └── config.h
 ├── dashboard/
-│   └── [visualization files]  # Web dashboard source (in development)
-│
+│   └── [visualization files]
 ├── docs/
-│   └── architecture.md        # Detailed architecture decision log
-│
+│   ├── architecture.md
+│   └── Executive_Summary.pdf
+└── README.md
+
+software_ml/
 └── README.md
 ```
 
