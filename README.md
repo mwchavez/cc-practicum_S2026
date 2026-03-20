@@ -212,4 +212,4 @@ enki-leak-detection/
 
 ---
 
-*Spring 2026 — University of the Incarnate Word | CSEC 4390 Senior Design Practicum*
+*Spring 2026 — University of the Incarnate Word | ENGR 4380 - Senior Design 2 / CSEC 4390 – Practicum*
