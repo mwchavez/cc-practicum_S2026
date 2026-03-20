@@ -1,5 +1,5 @@
 # Enki — Hybrid Multi-Modal Leak Detection System
-**CSEC 4390 – Senior Design Practicum | Spring 2026**  
+**ENGR 4380 - Senior Design 2 / CSEC 4390 – Practicum | Spring 2026**  
 **Faculty Advisor:** Dr. Okan Caglayan & Dr. Gonzalo Parra  
 **Course:** Engineering & Cybersecurity Systems
 
