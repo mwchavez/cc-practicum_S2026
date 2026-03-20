@@ -149,7 +149,7 @@ enki-leak-detection/
 ├── cloud_infrastructure/        # AWS CDK stack (Python)
 │   ├── leak_detection_practicum_stack.py
 │   ├── docs/
-│        ├── architecture.md 
+│        ├── Architecture.md 
 ├── ml_training/                 # ML model training & dataset generation
 │   ├── train_fusion_model.py
 │   ├── generate_fake_dataset.py
@@ -173,7 +173,7 @@ enki-leak-detection/
 - [x] IAM Role for IoT → DynamoDB write permissions
 - [x] End-to-end MQTT → IoT Core → DynamoDB pipeline tested
 - [x] SNS Topic with email subscription
-- [x] Infrastructure defined as code with AWS CDK (Python)
+- [ ] Infrastructure defined as code with AWS CDK (Python)
 - [ ] CloudWatch metric alarms for threshold detection
 - [ ] CloudWatch dashboard for monitoring
 
