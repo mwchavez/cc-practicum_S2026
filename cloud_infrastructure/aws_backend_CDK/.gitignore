@@ -9,3 +9,11 @@ __pycache__
 .cdk.staging
 cdk.out
 CLAUDE.md
+
+# Certificates and private keys
+*.pem
+*.pem.key
+*.key
+*.crt
+*.csr
+certs/
