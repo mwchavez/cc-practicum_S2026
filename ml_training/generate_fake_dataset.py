@@ -1,6 +1,4 @@
-# ml/generate_fake_dataset.py
-# Creates a fake multi-sensor feature dataset for leak vs no-leak (CSV)
-# Run: python ml/generate_fake_dataset.py
+
 
 import csv
 import os
