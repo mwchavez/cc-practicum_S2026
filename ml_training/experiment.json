@@ -1,0 +1,83 @@
+{
+  "sample_rate": 16000,
+  "window_samples": 128,
+  "raw_labels": [
+    "no_leak",
+    "small_leak",
+    "medium_leak",
+    "large_leak",
+    "leak"
+  ],
+  "label_map": {
+    "no_leak": "no_leak",
+    "small_leak": "leak",
+    "medium_leak": "leak",
+    "large_leak": "leak",
+    "leak": "leak"
+  },
+  "target_labels": [
+    "no_leak",
+    "leak"
+  ],
+  "leak_size_map": {
+    "no_leak": "none",
+    "small_leak": "small",
+    "medium_leak": "medium",
+    "large_leak": "large",
+    "leak": "unknown"
+  },
+  "spectral_bands": {
+    "low_band_max_hz": 1000.0,
+    "mid_band_max_hz": 4000.0,
+    "high_band_max_hz": 8000.0
+  },
+  "metadata_fields": [
+    "temperature_c",
+    "humidity_pct",
+    "pressure_hpa",
+    "gas_resistance_ohm",
+    "distance_cm",
+    "vibration_magnitude",
+    "vibration_mean",
+    "vibration_variance",
+    "vibration_trend",
+    "notes"
+  ],
+  "feature_columns": [
+    "rms",
+    "peak_frequency_hz",
+    "spectral_centroid_hz",
+    "low_band_energy",
+    "mid_band_energy",
+    "high_band_energy",
+    "zero_crossing_rate",
+    "temperature_c",
+    "humidity_pct",
+    "vibration_magnitude",
+    "vibration_mean",
+    "vibration_variance",
+    "vibration_trend"
+  ],
+  "training": {
+    "validation_split": 0.15,
+    "test_split": 0.15,
+    "batch_size": 16,
+    "epochs": 40,
+    "learning_rate": 0.001,
+    "random_seed": 42
+  },
+  "model": {
+    "hidden_units": [
+      32,
+      16
+    ],
+    "dropout": 0.15
+  },
+  "deployment": {
+    "default_export": "float32",
+    "quantized_export_name": "leak_model_int8.tflite",
+    "float_export_name": "leak_model_float.tflite",
+    "representative_dataset_size": 100,
+    "decision_threshold": 0.5
+  }
+}
