@@ -1,0 +1,155 @@
+#include <driver/i2s.h>
+#include <WiFi.h>
+#include <WiFiClientSecure.h>
+#include <PubSubClient.h>
+#include "super_secret2.h"
+
+//i2s pins
+#define I2S_WS 25
+#define I2S_SD 33
+#define I2S_SCK 26
+#define I2S_PORT I2S_NUM_0
+#define SAMPLE_BUFFER_SIZE 512
+int32_t samples[SAMPLE_BUFFER_SIZE];
+
+// Running stats (per second)
+long long runningSum = 0;
+long sampleCount = 0;
+
+// Timing
+unsigned long windowStart = 0;
+const unsigned long WINDOW_DURATION = 1000; // 1 second
+
+const char* ssid = WIFI_SSID;
+const char* password = WIFI_PASS;
+
+const char* AWS_ENDPOINT = AWS_END;
+const char* DEVICE_ID = DEV_ID;
+
+WiFiClientSecure net;
+PubSubClient client(net);
+
+void setup() {
+  Serial.begin(115200);
+  // I2S config
+  i2s_config_t i2s_config = {
+    .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),
+    .sample_rate = 16000,
+    .bits_per_sample = I2S_BITS_PER_SAMPLE_32BIT,
+    .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
+    .communication_format = I2S_COMM_FORMAT_I2S,
+    .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
+    .dma_buf_count = 4,
+    .dma_buf_len = 256,
+    .use_apll = false
+  };
+
+  i2s_pin_config_t pin_config = {
+    .bck_io_num = I2S_SCK,
+    .ws_io_num = I2S_WS,
+    .data_out_num = -1,
+    .data_in_num = I2S_SD
+  };
+
+  i2s_driver_install(I2S_PORT, &i2s_config, 0, NULL);
+  i2s_set_pin(I2S_PORT, &pin_config);
+  i2s_zero_dma_buffer(I2S_PORT);
+
+  windowStart = millis();
+  connectAWS();
+}
+
+void loop() {
+
+  if (!client.connected()) {
+    connectAWS();
+  }
+
+  client.loop();
+  size_t bytes_read;
+
+  // Read mic data
+  i2s_read(I2S_PORT, (void*)samples, sizeof(samples), &bytes_read, portMAX_DELAY);
+
+  int num_samples = bytes_read / 4;
+
+  long sum = 0;
+
+  // Process samples
+  for (int i = 0; i < num_samples; i++) {
+    int32_t sample = samples[i] >> 14;
+    sum += abs(sample);
+  }
+
+  int avg = sum / num_samples;
+
+  // Accumulate
+  runningSum += avg;
+  sampleCount++;
+
+  Serial.println(avg);
+
+  // Optional vibration sensor
+  //int vibration = analogRead(VIB_PIN);
+
+  // Check 1-second window
+  if (millis() - windowStart >= WINDOW_DURATION) {
+
+    if (sampleCount > 0) {
+      long secondAvg = runningSum / sampleCount;
+
+      // REAL EPOCH TIME
+      time_t now = time(nullptr);
+
+      // Build JSON
+      String payload = "{";
+      payload += "\"device_id\":\"node01\",";
+      payload += "\"timestamp\":" + String((unsigned long)now) + ",";
+      payload += "\"acoustic\":" + String(secondAvg); //+ ",";
+      //payload += "\"vibration\":" + String(vibration);
+      payload += "}";
+
+      Serial.println("Publishing:");
+      Serial.println(payload);
+
+      // Publish to AWS IoT
+      client.publish("leaksensor/node01/data", payload.c_str());
+    }
+
+    // Reset window
+    runningSum = 0;
+    sampleCount = 0;
+    windowStart += WINDOW_DURATION; // prevents drift
+  }
+
+  delay(50); // ~20 Hz sampling
+}
+
+void connectAWS() {
+
+  Serial.println("Connecting to WiFi...");
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("\nWiFi Connected");
+
+  // Certificates
+  net.setCACert(ROOT_CA);
+  net.setCertificate(DEVICE_CERT);
+  net.setPrivateKey(PRIVATE_KEY);
+
+  client.setServer(AWS_ENDPOINT, 8883);
+
+  Serial.println("Connecting to AWS IoT...");
+
+  while (!client.connect(DEVICE_ID)) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.println("\nConnected to AWS IoT!");
+}
